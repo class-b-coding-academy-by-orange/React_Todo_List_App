@@ -35,9 +35,11 @@ export default class App extends Component {
   //   this.setState({ data: 'Alice Zaheer' });
   // }
   render() {
+    const { tasks } = this.state;
     return (
       <React.Fragment>
-        <h1>App Component => {data}</h1>
+        <h6>App</h6>
+        <Todos tasks={tasks} a={4} />
       </React.Fragment >
     );
   }
