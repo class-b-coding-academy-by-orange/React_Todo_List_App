@@ -1,36 +1,11 @@
 import React, { Component } from 'react'; // ES6
+import axios from 'axios';
 // const React = require('react'); // Common javascript (used in nodejs)
 import Todos from './components/Todos';
 
 export default class App extends Component {
   state = {
-    tasks: [
-      {
-        id: 1,
-        title: "Download Zoom",
-        isCompleted: false
-      },
-      {
-        id: 2,
-        title: "Eat Fried Chicken",
-        isCompleted: true
-      },
-      {
-        id: 3,
-        title: "Play Games",
-        isCompleted: false
-      },
-      {
-        id: 4,
-        title: "Go for Shopping",
-        isCompleted: false
-      },
-      {
-        id: 5,
-        title: "Watch Movie",
-        isCompleted: false
-      }
-    ]
+    tasks: null
   };
   toggleComplete = (id) => {
     this.setState({
@@ -42,11 +17,27 @@ export default class App extends Component {
       })
     })
   }
+  componentDidMount() {
+    console.log('Get all called');
+    // axios: get data from api
+    axios.get('http://localhost:4000/tasks')
+      .then(response => {
+        console.log(response);
+        this.setState({
+          tasks: response.data
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+  }
   render() {
     const { tasks } = this.state;
     return (
       <React.Fragment>
         <h6>App</h6>
+        <button onClick={this.getAll}>Get All Tasks</button>
         <Todos tasks={tasks} a={4} toggleComplete={this.toggleComplete} />
       </React.Fragment >
     );
